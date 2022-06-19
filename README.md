@@ -6,11 +6,11 @@ Feel free to create the PR to share your tips!
 ### Here is the tips
 
 - [React Navigation](#-react-navigation)
-    - [Navigate from anywhere](####-navigate-from-anywhere)
+    - [Navigate from anywhere](#-navigate-from-anywhere)
 - [React Redux](#-react-redux)
-    - [Dispatch the function from anywhere](####-dispatch-the-function-from-anywhere)
-    - [Use shallow compare for `useSelector`](####-use-shallow-compare-for-useSelector)
-    - [Only defined the values we want to use](####-only-defined-the-values-we-want-to-use)
+    - [Dispatch the function from anywhere](#-dispatch-the-function-from-anywhere)
+    - [Use shallow compare for `useSelector`](#-use-shallow-compare-for-useSelector)
+    - [Only defined the values we want to use](#-only-defined-the-values-we-want-to-use)
 
 # React Navigation
 1. #### Navigate from anywhere
@@ -55,7 +55,7 @@ goBack()
 
 # React Redux
 
-1. #### Dispatch the function from anywhere
+#### Dispatch the function from anywhere
 
 - Step 1: Create the `ReduxDispatcher.js` file like this
 ```javascript
