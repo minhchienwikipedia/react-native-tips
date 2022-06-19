@@ -138,7 +138,7 @@ const { userName } = useShallowEqualSelector((state) => ({
 }));
 
 render(){
-    return <Text>{userInfo.userName}</Text>
+    return <Text>{userName}</Text>
 }
 ```
 Why❓
