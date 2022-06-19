@@ -53,6 +53,7 @@ navigate('Home', { params });
 goBack()
 ```
 
+**[⬆ Back to Top](#here-is-the-tips)**
 # React Redux
 
 1. #### Dispatch the function from anywhere
@@ -91,6 +92,7 @@ import ReduxDispatcher from '@/store/ReduxDispatcher';
 ReduxDispatcher(updateUserInfo(params));
 ```
 
+**[⬆ Back to Top](#here-is-the-tips)**
 2. #### Use shallow compare for `useSelector`
 When we defined the value in useSelector it didn't check the object as well so we will use shallow compare to make it re-render only when the object had changed.
 
@@ -111,6 +113,7 @@ const { uid } = useShallowEqualSelector((state) => ({
 }));
 ```
 
+**[⬆ Back to Top](#here-is-the-tips)**
 3. #### Only defined the values we want to use
 
 ❌ Wrong
@@ -136,3 +139,7 @@ render(){
 ```
 Why❓
 Because when you defined the object but you only want to use some fields in there it will re-render when you dont want to. Example, you just want to use `userName` but you defined the `userInfo` object so when `userInfo.address` changed your component will re-render.
+
+**[⬆ Back to Top](#here-is-the-tips)**
+
+#### [Welcome to contribute](https://github.com/minhchienwikipedia/react-native-tips/pulls)
