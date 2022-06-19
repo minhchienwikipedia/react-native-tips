@@ -1,4 +1,4 @@
-# React Native Tips 
+# React Native Tips
 
 This repo will show you the tips in React Native, this is my experience when I'm working on it.
 Feel free to create the PR to share your tips!
@@ -6,11 +6,11 @@ Feel free to create the PR to share your tips!
 ### Here is the tips
 
 - [React Navigation](#react-navigation)
-    - [Navigate from anywhere](#navigate-from-anywhere)
+  - [Navigate from anywhere](#navigate-from-anywhere)
 - [React Redux](#react-redux)
-    - [Dispatch the function from anywhere](#dispatch-the-function-from-anywhere)
-    - [Use shallow compare for `useSelector`](#use-shallow-compare-for-useSelector)
-    - [Only defined the values we want to use](#only-defined-the-values-we-want-to-use)
+  - [Dispatch the function from anywhere](#dispatch-the-function-from-anywhere)
+  - [Use shallow compare for `useSelector`](#use-shallow-compare-for-useSelector)
+  - [Only defined the values we want to use](#only-defined-the-values-we-want-to-use)
 
 
 
@@ -27,13 +27,13 @@ export const NavigationAction = navigationRef.current;
 
 
 export function navigate(name, params) {
-    navigationRef.current?.navigate?.(name, params);
+  navigationRef.current?.navigate?.(name, params);
 }
 
 export function goBack() {
-    if (navigationRef.current?.canGoBack?.()) {
-        navigationRef.current?.goBack?.();
-    }
+  if (navigationRef.current?.canGoBack?.()) {
+    navigationRef.current?.goBack?.();
+  }
 }
 ```
 
@@ -42,7 +42,7 @@ export function goBack() {
 import { navigationRef } from './routes/RootNavigation';
 
 <NavigationContainer ref={navigationRef}>
-    <AppContainer />
+  <AppContainer />
 </NavigationContainer>
 ```
 
@@ -67,23 +67,23 @@ import React from 'react';
 export const dispatchRef = React.createRef();
 
 const ReduxDispatcher = (action) => {
-    dispatchRef.current?.(action);
+  dispatchRef.current?.(action);
 };
 
 export default ReduxDispatcher;
 ```
 
-- Step 2: Open the file where you had setup the your `Provider` 
+- Step 2: Open the file where you had setup the your `Provider`
 ```javascript
 import { store } from './store';
 
 useEffect(() => {
-    dispatchRef.current = store.dispatch;
-    return () => {};
+  dispatchRef.current = store.dispatch;
+  return () => {};
 }, []);
 
 <Provider store={store}>
-// Your App
+  // Your App
 </Provider>
 ```
 
@@ -104,11 +104,11 @@ When we defined the value in useSelector it didn't check the object as well so w
 import { shallowEqual, useSelector } from 'react-redux';
 
 export function useShallowEqualSelector(selector) {
-    return useSelector(selector, shallowEqual);
+  return useSelector(selector, shallowEqual);
 }
 ```
 
-- Step 3: Enjoy it
+- Step 2: Enjoy it
 
 ```javascript
 const { uid } = useShallowEqualSelector((state) => ({
@@ -147,3 +147,56 @@ Because when you defined the object but you only want to use some fields in ther
 **[⬆ Back to Top](#here-is-the-tips)**
 
 #### [Welcome to contribute](https://github.com/minhchienwikipedia/react-native-tips/pulls)
+# Async Storage
+
+1. #### initialize the Async Storage
+- Step 1: Create the `storage.js` file like this
+```javascript
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const Storage = {
+  setItem: async (key, data) => {
+    data = typeof data === 'string' ? data : JSON.stringify(data);
+    try {
+      await AsyncStorage.setItem(key, data);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  getItem: async (key) => {
+    try {
+      let value = await AsyncStorage.getItem(key);
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        return value;
+      }
+    } catch (e) {
+      return null;
+    }
+  },
+
+  removeItem: async (key) => {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+};
+
+export default Storage;
+
+```
+- Step 2: Enjoy it
+```javascript
+import { Storage } from '@/storage';
+
+Storage.setItem('myKey', {
+    userName: 'minhchien',
+    address: 'Hanoi',
+});
+
+Storage.getItem('myKey');
+
