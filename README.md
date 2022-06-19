@@ -122,7 +122,7 @@ const { uid } = useShallowEqualSelector((state) => ({
 
 ❌ Wrong
 ```javascript
-const userInfo = useShallowEqualSelector((state) => ({
+const { userInfo } = useShallowEqualSelector((state) => ({
         userInfo: state.userInfo,
 }));
 
