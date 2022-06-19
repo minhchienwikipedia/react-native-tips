@@ -11,7 +11,8 @@ Feel free to create the PR to share your tips!
     - [Dispatch the function from anywhere](#dispatch-the-function-from-anywhere)
     - [Use shallow compare for `useSelector`](#use-shallow-compare-for-useSelector)
     - [Only defined the values we want to use](#only-defined-the-values-we-want-to-use)
-
+- [Async Storage](#async-storage)
+    - [Initialize the storage](#initialize-the-async-storage)
 
 
 # React Navigation
@@ -108,7 +109,7 @@ export function useShallowEqualSelector(selector) {
 }
 ```
 
-- Step 3: Enjoy it
+- Step 2: Enjoy it
 
 ```javascript
 const { uid } = useShallowEqualSelector((state) => ({
@@ -144,6 +145,59 @@ render(){
 Why❓
 Because when you defined the object but you only want to use some fields in there it will re-render when you dont want to. Example, you just want to use `userName` but you defined the `userInfo` object so when `userInfo.address` changed your component will re-render.
 
+# Async Storage
+
+1. #### initialize the Async Storage
+- Step 1: Create the `storage.js` file like this
+```javascript
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const Storage = {
+  setItem: async (key, data) => {
+    data = typeof data === 'string' ? data : JSON.stringify(data);
+    try {
+      await AsyncStorage.setItem(key, data);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  getItem: async (key) => {
+    try {
+      let value = await AsyncStorage.getItem(key);
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        return value;
+      }
+    } catch (e) {
+      return null;
+    }
+  },
+
+  removeItem: async (key) => {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+};
+
+export default Storage;
+
+```
+- Step 2: Enjoy it
+```javascript
+import { Storage } from '@/storage';
+
+Storage.setItem('myKey', {
+    userName: 'minhchien',
+    address: 'Hanoi',
+});
+
+Storage.getItem('myKey');
+```
 **[⬆ Back to Top](#here-is-the-tips)**
 
 #### [Welcome to contribute](https://github.com/minhchienwikipedia/react-native-tips/pulls)
