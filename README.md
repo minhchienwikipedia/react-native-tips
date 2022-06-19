@@ -95,6 +95,7 @@ ReduxDispatcher(updateUserInfo(params));
 ```
 
 **[⬆ Back to Top](#here-is-the-tips)**
+
 2. #### Use shallow compare for `useSelector`
 When we defined the value in useSelector it didn't check the object as well so we will use shallow compare to make it re-render only when the object had changed.
 
@@ -116,6 +117,7 @@ const { uid } = useShallowEqualSelector((state) => ({
 ```
 
 **[⬆ Back to Top](#here-is-the-tips)**
+
 3. #### Only defined the values we want to use
 
 ❌ Wrong
