@@ -108,7 +108,7 @@ export function useShallowEqualSelector(selector) {
 }
 ```
 
-- Step 3: Enjoy it
+- Step 2: Enjoy it
 
 ```javascript
 const { uid } = useShallowEqualSelector((state) => ({
