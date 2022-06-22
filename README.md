@@ -3,10 +3,12 @@
 This repo will show you the tips in React Native, this is my experience when I'm working on it.
 Feel free to create the PR to share your tips!
 
+
 ### Here is the tips
 
 - [React Navigation](#react-navigation)
     - [Navigate from anywhere](#navigate-from-anywhere)
+    - [Auto go back when navigate to same screen, same params](#auto-go-back-when-navigate-to-same-screen-same-params)
 - [React Redux](#react-redux)
     - [Dispatch the function from anywhere](#dispatch-the-function-from-anywhere)
     - [Use shallow compare for `useSelector`](#use-shallow-compare-for-useSelector)
@@ -56,6 +58,37 @@ goBack()
 ```
 
 **[⬆ Back to Top](#here-is-the-tips)**
+
+2. #### Auto go back when navigate to same screen, same params
+- Step 1: Setup [Navigate from anywhere](#navigate-from-anywhere)
+- Step 2: Update navigate function
+```javascript
+import { StackActions } from '@react-navigation/routers';
+import isEqual from 'lodash/isEqual';
+
+export function navigate(name, params) {
+    const pushAction = StackActions.push(name, params);
+    const { routes = [] } = navigationRef.current?.getRootState?.() || {};
+    const isExist =
+        routes.findIndex((item) => {
+            if (item.name === name && isEqual(item.params, params)) {
+                return true;
+            }
+            return false;
+        }) >= 0;
+    if (isExist) {
+        navigationRef.current?.navigate?.(name, params);
+        return;
+    }
+    navigationRef.current?.dispatch?.(pushAction);
+}
+```
+Explain: in [React Navigation docs](https://reactnavigation.org/docs/navigating/#summary) `navigate` will go back to that screen if it's already in stack, `push` will push anyway it's already or not. So we will check if target screen already in stack or not, if it's already and same params we will use navigate for react navigation handle go back, if it's not we will use `push` to have same screen but different params.
+
+- Step 3: Enjoy it
+
+**[⬆ Back to Top](#here-is-the-tips)**
+
 # React Redux
 
 1. #### Dispatch the function from anywhere
