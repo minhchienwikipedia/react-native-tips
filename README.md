@@ -3,6 +3,7 @@
 This repo will show you the tips in React Native, this is my experience when I'm working on it.
 Feel free to create the PR to share your tips!
 
+<br><p><a href="https://www.buymeacoffee.com/minhchien"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="fateh999" /></a></p><br><br><br>
 
 ### Here is the tips
 
